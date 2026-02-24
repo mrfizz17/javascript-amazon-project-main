@@ -45,28 +45,28 @@
 
 
 let pushHTML='';
-products.forEach((value)=>{
+products.forEach((product)=>{
     let createhtml=`
         <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
-              src="${value.image}">
+              src="${product.image}">
           </div>
 
           <div class="product-name limit-text-to-2-lines">
-            ${value.name}
+            ${product.name}
           </div>
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="../images/ratings/rating-${(value.rating.stars)*10}.png">
+              src="../images/ratings/rating-${(product.rating.stars)*10}.png">
             <div class="product-rating-count link-primary">
-              ${value.rating.count}
+              ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${((value.priceCents)/100).toFixed(2)}
+            $${((product.priceCents)/100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -91,7 +91,7 @@ products.forEach((value)=>{
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart-btn " data-product-name="${product.name}" data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -104,5 +104,75 @@ products.forEach((value)=>{
 })
 
 document.querySelector('.products-grid').innerHTML=pushHTML;
+
+document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
+    button.addEventListener('click',()=>{
+
+       /*
+        USED NAME TO IDENTIFY -- BUT BEST PRACTICE USE UNIQUE ID 
+
+       const productName= button.dataset.productName;
+
+       // check if it is already in cart if it is then increase quantity 
+       // if not newly add the item to cart
+
+
+      
+
+      
+
+          let matchingItem;
+
+          cart.forEach((item)=>{
+              if(productName === item.productName){
+                matchingItem=item;   // matchingItem is now a full product
+              }
+          });
+
+          if(matchingItem){  // if matchingItem true means the item is already in cart so 
+              matchingItem.quantity++; // instead newly add just increae quantity
+          }
+          else{  // means not present in cart so just add newly to cart
+                cart.push({
+                  productName,
+                  quantity:1
+                });
+
+          }
+
+       */
+
+          // Fetch id 
+
+          const productId = button.dataset.productId;
+
+          let matchItem;
+
+          cart.forEach((item)=>{
+              if(productId===item.productId){
+                matchItem=item;
+              }
+          });
+
+          if(matchItem){
+            matchItem.quantity++;
+          }else{
+            cart.push({
+              productId,
+              quantity:1
+            })
+          }
+
+
+
+
+
+
+
+       
+       console.log(cart);
+      
+    })
+})
 
 
