@@ -126,7 +126,7 @@ const addedMessageTimeouts={};
 
 
 
-function updateTotalQuantity(){
+ function updateTotalQuantity(){
     let totalQuantity=0;
 
           cart.forEach((cartItem)=>{
