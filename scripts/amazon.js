@@ -41,8 +41,9 @@
 
 // ];
 
-import {cart} from '../data/cart.js'
+// import {cart} from '../data/cart.js'
 import {products} from '../data/products.js'
+import {cart, addTocart } from '../data/cart.js';
 
 // if we want to use different name for cart in this file
 //  then we can do like this
@@ -119,10 +120,45 @@ document.querySelector('.products-grid').innerHTML=pushHTML;
 
 const addedMessageTimeouts={};
 
+
+
+
+
+function updateTotalQuantity(){
+    let totalQuantity=0;
+
+          cart.forEach((cartItem)=>{
+            totalQuantity+= cartItem.quantity;
+          });
+
+
+          document.querySelector('.js-cart-quantity').innerHTML=totalQuantity;
+}
+
+function showAddedMessage(productId){
+      const showAdded= document.querySelector(`.js-added-to-cart-${productId}`);
+      showAdded.classList.add('show-js-added-to-cart');
+
+      const previousTimeoutId=addedMessageTimeouts[productId];
+        if(previousTimeoutId){  
+          clearTimeout(previousTimeoutId);
+        }
+
+      const removeClass= ()=>{
+        showAdded.classList.remove('show-js-added-to-cart');
+      }
+
+      const timeoutId=setTimeout(()=>{
+        removeClass();
+      },2000);
+
+      addedMessageTimeouts[productId] =timeoutId;
+}
+
 document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
     button.addEventListener('click',()=>{
 
-       /*
+          /*
         USED NAME TO IDENTIFY -- BUT BEST PRACTICE USE UNIQUE ID 
 
        const productName= button.dataset.productName;
@@ -160,55 +196,11 @@ document.querySelectorAll('.js-add-to-cart-btn').forEach((button)=>{
 
           const productId = button.dataset.productId;
 
-          let matchItem;
+          addTocart(productId);
 
-          cart.forEach((item)=>{
-              if(productId===item.productId){
-                matchItem=item;
-              }
-          });
+          updateTotalQuantity();
 
-          let quantitySelector= document.querySelector(`.js-quantity-selector-${productId}`).value;
-
-          if(matchItem){
-            matchItem.quantity+= Number(quantitySelector);
-          }else{
-            cart.push({
-              productId,
-              quantity:Number(quantitySelector)
-            })
-          }
-
-          let totalQuantity=0;
-
-          cart.forEach((item)=>{
-            totalQuantity+= item.quantity;
-          });
-
-
-          document.querySelector('.js-cart-quantity').innerHTML=totalQuantity;
-
-          let showAdded= document.querySelector(`.js-added-to-cart-${productId}`);
-          showAdded.classList.add('show-js-added-to-cart');
-
-          const previousTimeoutId=addedMessageTimeouts[productId];
-            if(previousTimeoutId){  
-              clearTimeout(previousTimeoutId);
-            }
-
-          
-
-
-          const removeClass= ()=>{
-            showAdded.classList.remove('show-js-added-to-cart');
-          }
-
-          const timeoutId=setTimeout(()=>{
-            removeClass();
-          },2000);
-
-
-          addedMessageTimeouts[productId] =timeoutId;
+          showAddedMessage(productId);  
 
 
 
