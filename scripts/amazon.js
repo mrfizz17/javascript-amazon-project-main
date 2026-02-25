@@ -51,6 +51,8 @@ import {cart, addTocart } from '../data/cart.js';
 //import {cart as myCart} from '../data/cart.js'    
 
 
+updateTotalQuantity();
+
 
 let pushHTML='';
 products.forEach((product)=>{
