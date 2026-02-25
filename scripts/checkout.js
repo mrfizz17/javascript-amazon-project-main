@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, removeFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { saveToLocalStorage } from "../data/cart.js";
 saveToLocalStorage();
@@ -9,7 +9,7 @@ let checkoutCart=[];
 updateCheckoutCart();
 
 
-function updateCheckoutCart(){
+export function updateCheckoutCart(){
 
 
 
@@ -122,5 +122,17 @@ function renderHTML(){
 
 
 }
+
+
+document.querySelectorAll('.delete-quantity-link').forEach((deleteButton)=>{
+    deleteButton.addEventListener('click',()=>{
+        let productId= deleteButton.dataset.productId;
+
+        removeFromCart(productId);
+
+    
+
+    })
+})
 
 
