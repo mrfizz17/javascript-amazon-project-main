@@ -9,7 +9,7 @@ let checkoutCart=[];
 updateCheckoutCart();
 
 
-export function updateCheckoutCart(){
+function updateCheckoutCart(){
 
 
 
@@ -129,6 +129,9 @@ document.querySelectorAll('.delete-quantity-link').forEach((deleteButton)=>{
         let productId= deleteButton.dataset.productId;
 
         removeFromCart(productId);
+
+        const cartItemContainer= document.querySelector(`.js-cart-item-container-${productId}`);
+        cartItemContainer.remove();
 
     
 
