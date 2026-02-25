@@ -42,7 +42,13 @@
 // ];
 
 import {cart} from '../data/cart.js'
-//import {cart as myCart} from '../data/cart.js'  
+import {products} from '../data/products.js'
+
+// if we want to use different name for cart in this file
+//  then we can do like this
+
+//import {cart as myCart} from '../data/cart.js'    
+
 
 
 let pushHTML='';
