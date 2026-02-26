@@ -209,3 +209,21 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+
+.update-quantity,
+.update-quantity-button {
+  width: 30px;
+  display: none;
+}
+
+.update-quantity-button {
+  width: 40px;
+}
+
+.show-update-quantity {
+  display: inline-block;
+}
+.show-update-quantity-btn {
+  display:inline-block;
+}

@@ -8,6 +8,20 @@ let checkoutCart=[];
 
 updateCheckoutCart();
 updateTotalQuantity();
+updateQuanity();
+
+function updateCart(productid,value){
+    cart.forEach((cartItem)=>{
+        if(cartItem.productId===productid){
+            cartItem.quantity=value
+        }
+    })
+
+    saveToLocalStorage()
+    updateCheckoutCart();
+    updateTotalQuantity();
+    updateQuanity();
+}
 
 
 function updateCheckoutCart(){
@@ -61,9 +75,17 @@ function renderHTML(){
                   <span>
                     Quantity: <span class="quantity-label quantity-level-${checkoutItem.product.id}"> ${checkoutItem.quantity}</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
-                    Update
+                  <span class="update-quantity-link link-primary" data-product-id="${checkoutItem.product.id}">
+                        Update
+
+                        
                   </span>
+                  <input class ="update-quantity js-update-quantity-${checkoutItem.product.id}">
+
+                    <span class="update-quantity-button js-update-quantity-btn-${checkoutItem.product.id}">
+                        save
+                    </span>
+
                   <span class="delete-quantity-link link-primary" data-product-id="${checkoutItem.product.id}">
                     Delete
                   </span>
@@ -150,5 +172,42 @@ function updateTotalQuantity(){
 
 
           document.querySelector('.js-checkout-quantity').innerHTML=`${totalQuantity} `;
+}
+
+
+function updateQuanity(){
+        document.querySelectorAll('.update-quantity-link').forEach((link)=>{
+            link.addEventListener('click',()=>{
+                const productId=link.dataset.productId;
+                let inputBtn= document.querySelector(`.js-update-quantity-${productId}`);
+                let updateBtn=document.querySelector(`.js-update-quantity-btn-${productId}`);
+                
+                inputBtn.classList.add('show-update-quantity');
+                updateBtn.classList.add('show-update-quantity-btn');
+
+                        // console.log(inputBtn)
+
+
+
+                updateBtn.addEventListener('click',()=>{
+                    let updatequantityValue=Number(inputBtn.value);
+                    
+                  
+
+                        console.log(inputBtn);
+
+                       inputBtn.classList.remove('show-update-quantity');
+                        updateBtn.classList.remove('show-update-quantity-btn');
+
+                    updateCart(productId,updatequantityValue);
+                    
+                            
+                });
+                
+                
+
+                // console.log(productId);
+            })
+        })
 }
 
