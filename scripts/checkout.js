@@ -1,4 +1,4 @@
-import { cart, removeFromCart } from "../data/cart.js";
+import { cart, removeFromCart,updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { saveToLocalStorage } from "../data/cart.js";
 import { deliveryOptions } from "./deliveryOptions.js";
@@ -90,7 +90,7 @@ function renderHTML(){
         pushHTML+= `
         <div class="cart-item-container js-cart-item-container-${checkoutItem.product.id}">
             <div class="delivery-date">
-              Delivery date: ${matchedDeliveryDate};
+              Delivery date: ${matchedDeliveryDate}
             </div>
 
             <div class="cart-item-details-grid">
@@ -161,10 +161,12 @@ function deliverOptionHTML(checkoutItem){
             const isChecked = deliveryOption.id===checkoutItem.checkOutID ? 'checked' : '';
 
 
-             html+=   `<div class="delivery-option">
+             html+=   `<div class="delivery-option js-delivery-option"
+                            data-product-id="${checkoutItem.product.id}"
+                            data-delivery-option-id="${deliveryOption.id}">
                             <input type="radio"
                                 ${isChecked}
-                                class="delivery-option-input js-delivery-option-input"
+                                class="delivery-option-input "
                                 name="delivery-option-${checkoutItem.product.id}"
                                 data-product-id="${checkoutItem.product.id}">
                             <div>
@@ -182,6 +184,12 @@ function deliverOptionHTML(checkoutItem){
 }
 
 
+document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+    element.addEventListener('click',()=>{
+        const {productId,deliveryOptionId}=element.dataset;
+        updateDeliveryOption(productId,deliveryOptionId)
+    })
+})
 
 
 

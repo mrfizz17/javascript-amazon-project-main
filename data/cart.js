@@ -69,3 +69,17 @@ export function removeFromCart(productId){
         cart=newCart;
         saveToLocalStorage();
 }
+
+
+export function updateDeliveryOption(productId,deliveryOptionid){
+          let matchItem;
+
+          cart.find((cartitem)=>{
+              if(productId===cartitem.productId){
+                matchItem=cartitem;
+              }
+          });
+
+          matchItem.deliveryOptionId=deliveryOptionid;
+          saveToLocalStorage();
+}
