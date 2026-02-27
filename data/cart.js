@@ -4,23 +4,31 @@ export let cart= JSON.parse(localStorage.getItem('cart')) || [];
 
 saveToLocalStorage();
 
-export function addTocart(productId){
+export function addTocart(productId,quantitySelector){
       let matchItem;
 
-          cart.forEach((cartitem)=>{
+          cart.find((cartitem)=>{
               if(productId===cartitem.productId){
                 matchItem=cartitem;
               }
           });
 
-          let quantitySelector= document.querySelector(`.js-quantity-selector-${productId}`).value;
+          const parsedQuantity=Number(quantitySelector);
+
+
+          if(parsedQuantity<=0){
+            removeFromCart(productId);
+            return;
+          }
+
+          
 
           if(matchItem){
-            matchItem.quantity+= Number(quantitySelector);
+            matchItem.quantity+= parsedQuantity;
           }else{
             cart.push({
               productId,
-              quantity:Number(quantitySelector)
+              quantity:parsedQuantity  
             })
           }
 

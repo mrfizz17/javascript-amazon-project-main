@@ -8,7 +8,7 @@ let checkoutCart=[];
 
 updateCheckoutCart();
 updateTotalQuantity();
-updateQuanity();
+updateQuantity();
 
 function updateCart(productid,value){
     cart.forEach((cartItem)=>{
@@ -20,7 +20,7 @@ function updateCart(productid,value){
     saveToLocalStorage()
     updateCheckoutCart();
     updateTotalQuantity();
-    updateQuanity();
+    updateQuantity();
 }
 
 
@@ -154,7 +154,7 @@ function renderDeleteButtons(){
 
         removeFromCart(productId);
 
-        updateCheckoutCart();
+        updateCheckoutCart();   
         updateTotalQuantity();
 
     
@@ -175,7 +175,7 @@ function updateTotalQuantity(){
 }
 
 
-function updateQuanity(){
+function updateQuantity(){
         document.querySelectorAll('.update-quantity-link').forEach((link)=>{
             link.addEventListener('click',()=>{
                 const productId=link.dataset.productId;
@@ -211,3 +211,4 @@ function updateQuanity(){
         })
 }
 
+    
