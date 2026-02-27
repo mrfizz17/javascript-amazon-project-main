@@ -1,7 +1,18 @@
 import { cart, removeFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { saveToLocalStorage } from "../data/cart.js";
+import { deliveryOptions } from "./deliveryOptions.js";
+
+// importing as esm(ecmascript module) for dayjs and relativeTime plugin
+import dayjs from 'https://cdn.jsdelivr.net/npm/dayjs@1.11.19/+esm'
+import relativeTime from 'https://cdn.jsdelivr.net/npm/dayjs@1.11.19/plugin/relativeTime/+esm';
+dayjs.extend(relativeTime);
+
+//------------ checkout page rendering------------------
+
 saveToLocalStorage();
+
+
 
 
 let checkoutCart=[];
@@ -9,6 +20,12 @@ let checkoutCart=[];
 updateCheckoutCart();
 updateTotalQuantity();
 updateQuantity();
+
+
+
+// const today= dayjs();   
+// const deliverydate = dayjs().add(7,'day');
+
 
 function updateCart(productid,value){
     cart.forEach((cartItem)=>{
@@ -33,7 +50,8 @@ function updateCheckoutCart(){
         if(cartItem.productId===product.id){
             checkoutCart.push({
                 product,
-                quantity:cartItem.quantity
+                quantity:cartItem.quantity,
+                checkOutID:cartItem.deliveryOptionId
             });
         }
         
@@ -54,10 +72,25 @@ function updateCheckoutCart(){
 function renderHTML(){
         let pushHTML='';
         checkoutCart.forEach((checkoutItem)=>{
+        
+        const deliveryOptionID=checkoutItem.checkOutID;
+
+        let matchedDeliveryItem;
+
+        deliveryOptions.find((item)=>{
+            if(item.id===deliveryOptionID){
+                matchedDeliveryItem=item;
+            }
+        })
+
+        const matchedDeliveryDate = dayjs().add(
+            matchedDeliveryItem.deliveryDays,'days'
+        ).format('dddd, MMMM DD')
+
         pushHTML+= `
         <div class="cart-item-container js-cart-item-container-${checkoutItem.product.id}">
             <div class="delivery-date">
-              Delivery date: Tuesday, June 21
+              Delivery date: ${matchedDeliveryDate};
             </div>
 
             <div class="cart-item-details-grid">
@@ -96,46 +129,9 @@ function renderHTML(){
                     <div class="delivery-options-title">
                     Choose a delivery option:
                     </div>
-                    <div class="delivery-option">
-                    <input type="radio" checked
-                        class="delivery-option-input"
-                        name="delivery-option-${checkoutItem.product.id}">
-                    <div>
-                            <div class="delivery-option-date">
-                                Tuesday, June 21
-                            </div>
-                            <div class="delivery-option-price">
-                                FREE Shipping
-                            </div>
-                    </div>
-                    </div>
-
-                    <div class="delivery-option">
-                    <input type="radio"
-                        class="delivery-option-input"
-                        name="delivery-option-${checkoutItem.product.id}">
-                    <div>
-                            <div class="delivery-option-date">
-                                Wednesday, June 15
-                            </div>
-                            <div class="delivery-option-price">
-                                $4.99 - Shipping
-                            </div>
-                    </div>
-                    </div>
-                    <div class="delivery-option">
-                    <input type="radio"
-                        class="delivery-option-input"
-                        name="delivery-option-${checkoutItem.product.id}">
-                    <div>
-                            <div class="delivery-option-date">
-                                Monday, June 13
-                            </div>
-                            <div class="delivery-option-price">
-                                $9.99 - Shipping
-                            </div>
-                    </div>
-                    </div>
+                    
+                    ${deliverOptionHTML(checkoutItem)}
+                    
 
                 </div>
             </div>
@@ -146,6 +142,51 @@ function renderHTML(){
 
 
 }
+
+
+function deliverOptionHTML(checkoutItem){
+    let html='';
+        deliveryOptions.forEach((deliveryOption)=>{
+            const today = dayjs();
+            const deliveryDate= today.add(
+                deliveryOption.deliveryDays,'days'
+            )
+
+            const dateString = deliveryDate.format('dddd, MMMM DD');
+
+            const priceString =  (deliveryOption.priceCents!==0) 
+            ? `$${((deliveryOption.priceCents)/100).toFixed(2)} - ` 
+            : `FREE `
+
+            const isChecked = deliveryOption.id===checkoutItem.checkOutID ? 'checked' : '';
+
+
+             html+=   `<div class="delivery-option">
+                            <input type="radio"
+                                ${isChecked}
+                                class="delivery-option-input js-delivery-option-input"
+                                name="delivery-option-${checkoutItem.product.id}"
+                                data-product-id="${checkoutItem.product.id}">
+                            <div>
+                                    <div class="delivery-option-date">
+                                        ${dateString}
+                                    </div>
+                                    <div class="delivery-option-price">
+                                        ${priceString} Shipping
+                                    </div>
+                            </div>
+                        </div>`
+        })
+
+        return html;
+}
+
+
+
+
+
+
+
 
 function renderDeleteButtons(){
     document.querySelectorAll('.delete-quantity-link').forEach((deleteButton)=>{
@@ -211,4 +252,13 @@ function updateQuantity(){
         })
 }
 
-    
+// console.log(dayjs());
+// console.log(dayjs().format('HH:mm:ss'));
+// console.log(dayjs().format('dddd, DD-MMMM-YYYY'));
+// console.log(dayjs().add(7,'day').format('dddd, DD-MMMM-YYYY'));
+// console.log(dayjs().subtract(7,'day').format('dddd, DD-MMMM-YYYY'));
+// console.log(dayjs().startOf('month').format('dddd, DD-MMMM-YYYY'));
+// console.log(dayjs().startOf('hour').format('dddd, DD-MMMM-YYYY HH:mm:ss'));
+
+// const futureDate= dayjs().add(3,'day');
+// console.log(futureDate.fromNow());
