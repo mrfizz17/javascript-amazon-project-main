@@ -2,6 +2,7 @@ import { cart, removeFromCart,updateDeliveryOption,updateCart } from "../../data
 import { products } from "../../data/products.js";
 import { saveToLocalStorage } from "../../data/cart.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 // importing as esm(ecmascript module) for dayjs and relativeTime plugin
 import dayjs from 'https://cdn.jsdelivr.net/npm/dayjs@1.11.19/+esm'
@@ -15,7 +16,7 @@ saveToLocalStorage();
 
 
 
-let checkoutCart=[];
+export let checkoutCart=[];
 
 updateCheckoutCart();
 
@@ -51,6 +52,7 @@ export function updateCheckoutCart(){
     updateTotalQuantity();
     updateQuantity();
     renderUpdateDeliveryOption();
+    renderPaymentSummary();
 
     
 
