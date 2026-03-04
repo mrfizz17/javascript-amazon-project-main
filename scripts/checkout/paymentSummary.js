@@ -1,5 +1,6 @@
 import { checkoutCart } from "./orderSummary.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { formatCurrancy } from "../utils/money.js";
 
 
 
@@ -20,8 +21,8 @@ let paymentSummaryHTML='';
             })
         });
 
-        let totalBeforeTax= ((totalPrice+shippingCost)/100).toFixed(2);
-        let tax= (((totalPrice+shippingCost)*0.1)/100).toFixed(2);
+        let totalBeforeTax=formatCurrancy((totalPrice+shippingCost));
+        let tax= formatCurrancy((totalPrice+shippingCost)*0.1);
 
         let totalAfterTax= (Number(totalBeforeTax)+Number(tax)).toFixed(2);
 
@@ -33,12 +34,12 @@ let paymentSummaryHTML='';
 
                 <div class="payment-summary-row">
                     <div>Items (${updateTotalQuantity()}):</div>
-                    <div class="payment-summary-money">$${(totalPrice/100).toFixed(2)}</div>
+                    <div class="payment-summary-money">$${formatCurrancy(totalPrice)}</div>
                 </div>
 
                 <div class="payment-summary-row">
                     <div>Shipping &amp; handling:</div>
-                    <div class="payment-summary-money">$${(shippingCost/100).toFixed(2)}</div>
+                    <div class="payment-summary-money">$${formatCurrancy(shippingCost)}</div>
                 </div>
 
                 <div class="payment-summary-row subtotal-row">
