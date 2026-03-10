@@ -18,7 +18,7 @@ saveToLocalStorage();
 
 export let checkoutCart=[];
 
-updateCheckoutCart();
+// updateCheckoutCart();
 
 
 
@@ -62,7 +62,7 @@ export function updateCheckoutCart(){
 
 
 
-function renderHTML(){
+export function renderHTML(){
         let pushHTML='';
         checkoutCart.forEach((checkoutItem)=>{
         
@@ -81,7 +81,7 @@ function renderHTML(){
         ).format('dddd, MMMM DD')
 
         pushHTML+= `
-        <div class="cart-item-container js-cart-item-container-${checkoutItem.product.id}">
+        <div class="cart-item-container js-cart-item-container js-cart-item-container-${checkoutItem.product.id}">
             <div class="delivery-date">
               Delivery date: ${matchedDeliveryDate}
             </div>
@@ -97,8 +97,8 @@ function renderHTML(){
                 <div class="product-price">
                   $${(checkoutItem.product.priceCents/100).toFixed(2)}
                 </div>
-                <div class="product-quantity">
-                  <span>
+                <div class="product-quantity ">
+                  <span class="js-product-quantity-${checkoutItem.product.id}">
                     Quantity: <span class="quantity-label quantity-level-${checkoutItem.product.id}"> ${checkoutItem.quantity}</span>
                   </span>
                   <span class="update-quantity-link link-primary" data-product-id="${checkoutItem.product.id}">
@@ -112,7 +112,7 @@ function renderHTML(){
                         save
                     </span>
 
-                  <span class="delete-quantity-link link-primary" data-product-id="${checkoutItem.product.id}">
+                  <span class="delete-quantity-link link-primary js-delete-link-${checkoutItem.product.id}" data-product-id="${checkoutItem.product.id}">
                     Delete
                   </span>
                 </div>
@@ -199,7 +199,6 @@ function renderDeleteButtons(){
         removeFromCart(productId);
 
         updateCheckoutCart();   
-        updateTotalQuantity();
 
     
 
