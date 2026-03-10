@@ -55,6 +55,11 @@ describe('test suite: renderOrderSummary',()=>{
         ).toEqual("Quantity: 2 ");
 
 
+        expect(
+            document.querySelector('.js-product-name-e43638ce-6aa0-4b85-b27f-e1d07eb678c6').innerHTML
+        ).toContain('Black and Gray Athletic Cotton Socks - 6 Pairs');
+
+
         document.querySelector('.js-test-container').innerHTML='';
 
     });
@@ -87,4 +92,49 @@ describe('test suite: renderOrderSummary',()=>{
 
 
 });
+
+
+
+
+
+
+
+
+
+describe('test suite : update delivery option',()=>{
+    beforeEach(() => {
+        spyOn(localStorage,'setItem');
+        spyOn(localStorage,'getItem').and.callFake(()=>{
+            return JSON.stringify([   {
+                        productId:'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+
+                        quantity:2,
+                        deliveryOptionId:'1'
+                    },              
+                    {   
+                        productId:'15b6fc6f-327a-4ec4-896f-486349e85a3d',
+                        quantity:1,
+                        deliveryOptionId:'3'
+                    }
+                ]) 
+        });
+
+        loadFromStorage();
+        document.querySelector('.js-test-container').innerHTML=
+        `
+         <div class="js-order-summary"> </div>
+          <div class="js-checkout-quantity"></div>
+          <div class="js-payment-summary"></div>
+        `
+        updateCheckoutCart();
+        });
+
+    it('check update delivery option working properly',()=>{
+        document.querySelector('.js-delivery-option-e43638ce-6aa0-4b85-b27f-e1d07eb678c6-3').click();
+        updateCheckoutCart();
+        expect(cart[0].deliveryOptionId).toEqual('3');
+        document.querySelector('.js-test-container').innerHTML='';
+    })  
+
+})
 

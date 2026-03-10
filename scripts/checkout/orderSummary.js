@@ -91,7 +91,7 @@ export function renderHTML(){
                 src="${checkoutItem.product.image}">
 
               <div class="cart-item-details">
-                <div class="product-name">
+                <div class="product-name js-product-name-${checkoutItem.product.id}">
                   ${checkoutItem.product.name}
                 </div>
                 <div class="product-price">
@@ -154,7 +154,7 @@ function deliverOptionHTML(checkoutItem){
             const isChecked = deliveryOption.id===checkoutItem.checkOutID ? 'checked' : '';
 
 
-             html+=   `<div class="delivery-option js-delivery-option"
+             html+=   `<div class="delivery-option js-delivery-option js-delivery-option-${checkoutItem.product.id}-${deliveryOption.id} "
                             data-product-id="${checkoutItem.product.id}"
                             data-delivery-option-id="${deliveryOption.id}">
                             <input type="radio"
