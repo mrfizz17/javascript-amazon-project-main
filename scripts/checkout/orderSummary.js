@@ -95,7 +95,7 @@ export function renderHTML(){
                   ${checkoutItem.product.name}
                 </div>
                 <div class="product-price">
-                  $${(checkoutItem.product.priceCents/100).toFixed(2)}
+                  $${checkoutItem.product.getPrice()}
                 </div>
                 <div class="product-quantity ">
                   <span class="js-product-quantity-${checkoutItem.product.id}">
