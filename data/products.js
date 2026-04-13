@@ -55,6 +55,30 @@ class Clothing extends Product{
 
 }
 
+class Appliances extends Product{
+  instructonLinks;
+  warranty;
+  
+  constructor(productDetails){
+    super(productDetails);
+    this.instructonLinks=productDetails.instructonLinks;
+    this.warranty=productDetails.warranty;
+  }
+
+  extraInfoHTML(){
+    return `
+      <a href="${this.instructonLinks}" target="_blank">
+        Instruction Manual
+      </a>
+      <br>
+      <a href="${this.warranty}" target="_blank">
+        Warranty Information
+      </a>
+    `
+  }
+
+}
+
 // const tshirt = new Clothing({
 //     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
 //     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
@@ -150,7 +174,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type:"appliances",
+    instructonLinks:'../images/appliance-instructions.png',
+    warranty:'../images/appliance-warranty.png'
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -337,7 +364,10 @@ export const products = [
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    type:"appliances",
+    instructonLinks:'../images/appliance-instructions.png',
+    warranty:'../images/appliance-warranty.png'
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -757,7 +787,10 @@ export const products = [
 ].map((productDetails)=>{
   if(productDetails.type==='clothing'){
     return new Clothing(productDetails);
-  }else{
+  }else if(productDetails.type==='appliances'){
+    return new Appliances(productDetails)
+  }
+  else{
     return new Product(productDetails);
 
   }

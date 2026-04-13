@@ -94,7 +94,7 @@ products.forEach((product)=>{
             </select>
           </div>
 
-          // POLYMORPHISM 
+         
 
           ${product.extraInfoHTML()}
 
