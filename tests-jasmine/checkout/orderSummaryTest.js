@@ -1,8 +1,16 @@
 import { renderHTML, updateCheckoutCart } from "../../scripts/checkout/orderSummary.js";
 import { addTocart, cart, removeFromCart } from "../../data/cart.js";
 import { loadFromStorage } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
 
 describe('test suite: renderOrderSummary',()=>{
+
+
+    beforeAll((done)=>{
+        loadProducts(()=>{
+            done();
+        });
+    })
 
     beforeEach(() => {
             spyOn(localStorage,'setItem');
@@ -102,6 +110,15 @@ describe('test suite: renderOrderSummary',()=>{
 
 
 describe('test suite : update delivery option',()=>{
+
+     beforeAll((done)=>{
+        loadProducts(()=>{
+            done();
+        });
+    })
+
+
+
     beforeEach(() => {
         spyOn(localStorage,'setItem');
         spyOn(localStorage,'getItem').and.callFake(()=>{
