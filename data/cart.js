@@ -101,3 +101,16 @@ export function updateCart(productid,value){
     saveToLocalStorage()
     
 }
+
+
+// export function loadCart(){
+//   const xhr = new XMLHttpRequest();
+
+//   xhr.addEventListener('load',()=>{
+
+//   });
+
+//   xhr.open('GET', 'https://fakestoreapi.com/products');
+//   xhr.send();
+
+// }

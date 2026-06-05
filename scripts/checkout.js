@@ -6,5 +6,20 @@ import { loadProducts } from "../data/products.js";
 
 // import '../data/backend-practice.js'
 
-loadProducts(updateCheckoutCart);
+
+
+// promises practice
+
+new Promise((resolve)=>{
+    loadProducts(()=>{
+        resolve();
+    })
+}).then(()=>{
+    updateCheckoutCart();
+})
+
+
+
+
+// loadProducts(updateCheckoutCart);
 // updateCheckoutCart();
